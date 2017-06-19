@@ -89,6 +89,4 @@ def write_array(f, set,
             f.write(nest_sep)
             write_array(f, subset,
                         item_sep, nest_prefix, nest_suffix, nest_sep)
-        f.write(nest_suffix)
-
 

@@ -27,7 +27,7 @@ def demo():
     # are also output on stderr.
     g = Gnuplot.Gnuplot(debug=1)
     g.title('A simple example') # (optional)
-    g('set data style linespoints') # give gnuplot an arbitrary command
+    g('set style data linespoints') # give gnuplot an arbitrary command
     # Plot a list of (x, y) pairs (tuples or a numpy array would
     # also be OK):
     g.plot([[0,1.1], [1,5.8], [2,3.3], [3,4.2]])
@@ -44,7 +44,7 @@ def demo():
     # written to a temporary file once.
     d = Gnuplot.Data(x, y1,
                      title='calculated by python',
-                     with_='points 3 3')
+                     with_='points')
     g.title('Data can be computed by python or gnuplot')
     g.xlabel('x')
     g.ylabel('x squared')
@@ -75,7 +75,7 @@ def demo():
     ym = y[newaxis,:]
     m = (sin(xm) + 0.1*xm) - ym**2
     g('set parametric')
-    g('set data style lines')
+    g('set style data lines')
     g('set hidden')
     g('set contour base')
     g.title('An example of a surface plot')
