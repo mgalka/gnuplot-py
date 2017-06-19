@@ -252,7 +252,7 @@ class Gnuplot:
         plotcmds = []
         for item in self.itemlist:
             plotcmds.append(item.command())
-        self(self.plotcmd + ' ' + string.join(plotcmds, ', '))
+        self(self.plotcmd + ' ' + ', '.join(plotcmds))
         for item in self.itemlist:
             # Uses self.gnuplot.write():
             item.pipein(self.gnuplot)
@@ -276,7 +276,7 @@ class Gnuplot:
         for item in items:
             if isinstance(item, PlotItems.PlotItem):
                 self.itemlist.append(item)
-            elif type(item) is types.StringType:
+            elif isinstance(item, str):
                 self.itemlist.append(PlotItems.Func(item))
             else:
                 # assume data is an array:
@@ -436,7 +436,7 @@ class Gnuplot:
             if font is not None:
                 cmd.append('"%s"' % (font,))
 
-        self(string.join(cmd))
+        self(' '.join(cmd))
 
     def set_boolean(self, option, value):
         """Set an on/off option.  It is assumed that the way to turn
@@ -458,7 +458,7 @@ class Gnuplot:
 
         if value is None:
             self('set %s [*:*]' % (option,))
-        elif type(value) is types.StringType:
+        elif isinstance(value, str):
             self('set %s %s' % (option, value,))
         else:
             # Must be a tuple:
@@ -523,7 +523,7 @@ class Gnuplot:
 
         """
 
-        if type(value) is types.StringType:
+        if isinstance(value, str):
             tics_string = value
         else:
             tics_strings = []
@@ -633,11 +633,11 @@ class Gnuplot:
             # Not all options were consumed.
             raise Errors.OptionError(
                 'The following options are unrecognized: %s'
-                % (string.join(keyw.keys(), ', '),)
+                % (' '.join(keyw.keys(), ', '),)
                 )
 
         self.set_string('output', filename)
-        self(string.join(setterm))
+        self(' '.join(setterm))
         # replot the current figure (to the printer):
         self.refresh()
         # reset the terminal to its `default' setting:

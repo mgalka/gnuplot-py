@@ -153,7 +153,7 @@ class PlotItem:
 
         if value is None:
             self._options[option] = (value, default)
-        elif type(value) is types.StringType:
+        elif isinstance(value, str):
             self._options[option] = (value, fmt % value)
         else:
             Errors.OptionError('%s=%s' % (option, value,))
@@ -175,7 +175,7 @@ class PlotItem:
             (val,str) = self._options.get(opt, (None,None))
             if str is not None:
                 cmd.append(str)
-        return string.join(cmd)
+        return ' '.join(cmd)
 
     def command(self):
         """Build the plot command to be sent to gnuplot.
@@ -186,7 +186,7 @@ class PlotItem:
 
         """
 
-        return string.join([
+        return ' '.join([
             self.get_base_command_string(),
             self.get_command_option_string(),
             ])
@@ -307,9 +307,9 @@ class _FileItem(PlotItem):
     def set_option_colonsep(self, name, value):
         if value is None:
             self.clear_option(name)
-        elif type(value) in [types.StringType, types.IntType]:
+        elif isinstance(value, (str, int)):
             self._options[name] = (value, '%s %s' % (name, value,))
-        elif type(value) is types.TupleType:
+        elif isinstance(value, tuple):
             subopts = []
             for subopt in value:
                 if subopt is None:
@@ -318,7 +318,7 @@ class _FileItem(PlotItem):
                     subopts.append(str(subopt))
             self._options[name] = (
                 value,
-                '%s %s' % (name, string.join(subopts, ':'),),
+                '%s %s' % (name, ' '.join(subopts, ':'),),
                 )
         else:
             raise Errors.OptionError('%s=%s' % (name, value,))
@@ -496,7 +496,7 @@ def File(filename, **keyw):
 
     """
 
-    if type(filename) is not types.StringType:
+    if isinstance(filename, str):
         raise Errors.OptionError(
             'Argument (%s) must be a filename' % (filename,)
             )

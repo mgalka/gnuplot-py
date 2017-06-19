@@ -114,7 +114,7 @@ class GnuplotProcess:
     def write(self, s):
         """Mac gnuplot apparently requires '\r' to end statements."""
 
-        self.gnuplot.gnuexec(string.replace(s, '\n', os.linesep))
+        self.gnuplot.gnuexec(s.replace('\n', os.linesep))
 
     def flush(self):
         pass
