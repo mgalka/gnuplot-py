@@ -9,10 +9,8 @@
 
 """
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
+
 
 # Get the version number from the __init__ file:
 from __init__ import __version__
@@ -41,5 +39,6 @@ setup (
     # Description of the package in the distribution
     package_dir={'Gnuplot' : '.'},
     packages=['Gnuplot'],
+    install_requires=['future;python_version<"3.0"'],
     )
 
